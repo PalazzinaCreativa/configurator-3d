@@ -1,13 +1,12 @@
 import * as THREE from 'three'
 import { LightOptions } from '../interfaces'
-import merge from 'lodash/merge'
 
 const defaultOptions: LightOptions[] = [
   {
     type: 'HemisphereLight',
     skyColor: 0xffffff,
     groundColor: 0x999999,
-    intensity: 1.4,
+    intensity: 1.2,
     position: {
       x: 0,
       y: 100,
@@ -18,8 +17,8 @@ const defaultOptions: LightOptions[] = [
     type: 'SpotLight',
     color: 0xffffff,
     intensity: 0.2,
-    angle: Math.PI / 2,
-    // defaultShadows: true,
+    // angle: Math.PI / 2,
+    defaultShadows: true,
     position: {
       x: 0,
       y: 6,
@@ -27,20 +26,20 @@ const defaultOptions: LightOptions[] = [
     },
     targetModel: true
   },
-  {
-    type: 'SpotLight',
-    color: 0xffffff,
-    intensity: 0.1,
-    penumbra: 0.2,
-    followCamera: true,
-    targetModel: true,
-    angle: Math.PI / 6,
-    position: {
-      x: 0,
-      y: 0,
-      z: 0
-    }
-  },
+  // {
+  //   type: 'SpotLight',
+  //   color: 0xffffff,
+  //   intensity: 0.1,
+  //   penumbra: 0.2,
+  //   followCamera: true,
+  //   targetModel: true,
+  //   angle: Math.PI / 6,
+  //   position: {
+  //     x: 0,
+  //     y: 0,
+  //     z: 0
+  //   }
+  // }
 ]
 
 const addProperties = (target: any, params: object) => {
@@ -76,8 +75,6 @@ const createLight = (params: LightOptions) => {
 
   addProperties(light, params)
 
-  console.log(light)
-
   return light
 }
 
@@ -86,14 +83,14 @@ export default (
   props: LightOptions[] = defaultOptions
 ) => {
   if (!scene) return
-  const options = merge(props, defaultOptions)
+
   let lights: {
     light: THREE.HemisphereLight | THREE.SpotLight | THREE.DirectionalLight
     followCamera?: boolean,
     targetModel?: boolean
   }[] = []
 
-  options
+  props
     .forEach((params: LightOptions) => {
       const light = createLight(params)
       scene.add(light)

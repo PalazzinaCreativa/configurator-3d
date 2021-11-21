@@ -29,11 +29,10 @@ export default (props?: Props | ModelParams[]) => {
 
     const models: THREE.Object3D[] = await Promise.all(
       iterableModels
-        .map((m) => {
-          return new Promise(async resolve => {
-            const model = await modelLoader(m)
-            resolve(model)
-          })
+        .map(async (m) => {
+          const model: THREE.Object3D = await modelLoader(m)
+          model.name = m.name
+          return model
         })
     )
 

@@ -10,7 +10,7 @@ import animate from './methods/animate'
 import onWindowResize from './utils/onWindowResize'
 import { ViewerParams, Callback, ModelParams } from './interfaces'
 import modelLoader from './methods/modelLoader'
-
+import merge from 'lodash/merge'
 
 export default class {
   domElement: HTMLElement | null
@@ -37,7 +37,7 @@ export default class {
       console.error('3D Viewer: You need to specify a DOM Element.')
       return null
     }
-    this.scene = initScene(params.scene)
+    this.scene = await initScene(params.scene)
     this.renderer = initRenderer(this.domElement)
     this.camera = initCamera(params.camera)
 
@@ -84,20 +84,60 @@ export default class {
     }
   }
 
-  async replaceMesh (toRemove: string, toAdd: ModelParams | ModelParams[] | any, callback?: Callback) {
-    const removeMesh = this.scene.children.find(m => m.name === toRemove)
-      || this.scene.children.find(m => m.name === 'MainModel').find(m => m.name === toRemove)
-    if (!removeMesh) {
-      console.error("Viewer 3D: Can't find the mesh to remove")
-      return null
-    }
+  replaceMesh (toRemove: string, toAdd: ModelParams | ModelParams[] | any, callback?: Callback) {
+    return new Promise(async (resolve, reject) => {
+      const removeMesh = this.getMesh(toRemove)
+      if (!removeMesh) {
+        console.error("Viewer 3D: Can't find the mesh to remove")
+        return null
+      }
 
-    const newModel = await modelLoader(toAdd)
-    if (callback) callback()
-    return newModel
+      this.model.remove(removeMesh)
+
+      const newModel = await modelLoader(toAdd)
+      this.model.add(newModel)
+
+      if (callback) callback()
+      resolve(newModel)
+    })
   }
 
   destroy () {
     this.scene.remove.apply(this.scene, this.scene.children)
+  }
+
+  updateMesh (name: string, options: { [key: string]: any }) {
+    const model = this.getMesh(name)
+    merge(model, options)
+  }
+
+  getMesh (name: string) {
+    return this.model?.children?.find((m: THREE.Object3D) => m.name === name)
+  }
+
+  updateTexture (material: string, texturePath: string, repeat: number = 4, model: THREE.Object3D = this.model) {
+    new THREE.TextureLoader().load(texturePath, (texture) => {
+      texture.name = texturePath
+      texture.repeat.set(repeat, repeat)
+      model.traverse(child => {
+        if (child.material && child.name.indexOf(material) > -1) {
+          child.material.needsUpdate = true
+          child.material.map = texture
+        }
+      })
+    })
+  }
+
+  updateColor (material: string, color: [number, number, number] = [255, 255, 255], model: THREE.Object3D = this.model) {
+    const [r, g, b] = color
+    const newColor = new THREE.Color(Math.round(r / 255 * 100) / 100, Math.round(g / 255 * 100) / 100, Math.round(b / 255 * 100) / 100)
+    console.log(newColor)
+    model.traverse(child => {
+      if (child.material && child.name.indexOf(material) > -1) {
+        child.material.needsUpdate = true
+        child.material.color = newColor
+        console.log(child.material)
+      }
+    })
   }
 }

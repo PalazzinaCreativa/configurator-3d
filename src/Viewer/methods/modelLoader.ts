@@ -25,11 +25,12 @@ export default (props: ModelParams = defaultOptions) => {
     console.error('Viewer 3D: You need to specify the model path')
     return null
   }
-  const options = merge(defaultOptions, props)
+
+  const options = merge({}, defaultOptions, props)
 
   return new Promise((resolve, reject) => {
     loader.load(options.path, gltf => {
-      const model = gltf.scene
+      const model = gltf.scene || gltf
       if (options.name) {
         model.name = options.name
       } else {
@@ -52,6 +53,10 @@ export default (props: ModelParams = defaultOptions) => {
         if (o.material.map) {
           if (texture) o.material.map = texture
           o.material.map.anisotropy = 16
+        }
+        if (o.material && o.material.name.indexOf('poliuretano') > -1) {
+          o.material.envMapIntensity = 0.3
+          o.material.toneMapped = false
         }
       })
 

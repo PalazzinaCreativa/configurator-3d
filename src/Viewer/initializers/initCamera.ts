@@ -11,7 +11,7 @@ const defaultOptions: CameraOptions = {
   z: 2
 }
 export default (props: CameraOptions = defaultOptions) => {
-  const options = merge(defaultOptions, props)
+  const options = merge({}, defaultOptions, props)
   const { fov, near, far, x, y, z } = options
   const camera: any = new THREE.PerspectiveCamera( fov, window.innerWidth / window.innerHeight, near, far)
   camera.position.set(x, y, z)

@@ -16,3 +16,64 @@ body {
   top: 0;
   left: 0;
 }
+
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  padding: 2rem;
+  font-family: sans-serif;
+  min-width: 120px;
+}
+
+.menu div {
+  margin-bottom: 3rem;
+}
+
+.menu h3 {
+  color: #111144;
+  width: 100%;
+  padding-bottom: 3px;
+  border-bottom: 1px solid #bbb;
+}
+
+.menu button {
+  all: unset;
+  display: block;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  text-decoration: underline;
+  transition: all 0.2s ease-out;
+}
+
+.menu button.active {
+  opacity: 0.6;
+  text-decoration: none;
+  pointer-events: none;
+  padding-left: 1rem;
+}
+
+.menu .colors button,
+.menu .textures button {
+  position: relative;
+  display: inline-block;
+  margin: 6px;
+}
+
+.menu .colors button.active,
+.menu .textures button.active {
+  transform: translateY(-10px);
+  padding-left: 0;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.menu button img {
+  width: 40px;
+  position: relative;
+  display: block;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+}
