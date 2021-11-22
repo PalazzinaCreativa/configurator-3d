@@ -1,6 +1,6 @@
 {
-  "name": "configurator-3d",
-  "version": "0.0.1",
+  "name": "@gianluca-plz/configurator-3d",
+  "version": "0.0.2",
   "files": [
     "dist"
   ],
