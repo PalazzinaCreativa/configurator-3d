@@ -10,12 +10,13 @@ interface Props {
   space?: number
 }
 
-export default (props?: Props | ModelParams[]) => {
+export default (props?: Props | ModelParams[]): any => {
   if (!props) {
     console.error('Viewer 3D: No models specified')
     return null
   }
-  let model
+
+  let model: any
 
 
   return new Promise(async (resolve, reject) => {

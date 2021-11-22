@@ -10,7 +10,8 @@ const defaultOptions: SceneOptions = {
     near: 10,
     far: 50
   },
-  hdri: false
+  hdri: false,
+  helper: false
 }
 
 export default (props: SceneOptions = defaultOptions) => {

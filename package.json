@@ -21,14 +21,15 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "build:types": "tsc -m amd -t ESNext -d --isolatedModules false  --moduleResolution node --esModuleInterop --jsx react --outFile dist/configurator.js src/main.ts && rm -rf dist/configurator.js "
   },
   "devDependencies": {
-    "typescript": "^4.3.2",
-    "vite": "^2.6.4"
+    "typescript": "^4.5.2",
+    "vite": "^2.6.4",
+    "lodash": "^4.17.21"
   },
   "dependencies": {
-    "lodash": "^4.17.21",
     "three": "^0.133.1"
   }
 }
