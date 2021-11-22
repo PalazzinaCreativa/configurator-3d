@@ -1,6 +1,6 @@
 {
-  "name": "configurator",
-  "version": "0.0.0",
+  "name": "configurator-3d",
+  "version": "0.0.1",
   "files": [
     "dist"
   ],
@@ -11,6 +11,12 @@
       "import": "./dist/configurator.es.js",
       "require": "./dist/configurator.umd.js"
     }
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "url": "git@github.com:gianluca-plz/configurator-3d.git"
   },
   "scripts": {
     "dev": "vite",
