@@ -1,6 +1,17 @@
 {
   "name": "configurator",
   "version": "0.0.0",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/configurator.umd.js",
+  "module": "./dist/configurator.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/configurator.es.js",
+      "require": "./dist/configurator.umd.js"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -12,7 +23,6 @@
   },
   "dependencies": {
     "lodash": "^4.17.21",
-    "three": "^0.133.1",
-    "three-stdlib": "^2.5.5"
+    "three": "^0.133.1"
   }
 }
