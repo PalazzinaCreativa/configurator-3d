@@ -1,26 +1,20 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { ControlsOptions } from '../interfaces'
 import getObject3dHeight from '../utils/getObject3dHeight'
 
-interface Options {
-  maxPolarAngle?: number,
-  minPolarAngle?: number,
-  enableDamping?: boolean,
-  enablePan?: boolean,
-  dampingFactor?: number,
-  minDistance?: number,
-  maxDistance?: number
-}
 export default (
   camera: THREE.Camera,
   renderer: THREE.WebGLRenderer,
   model: THREE.Object3D,
-  options: Options = {
+  options: ControlsOptions = {
     enableDamping: true,
-    enablePan: true,
+    enablePan: false,
+    maxPolarAngle: Math.PI / 2,
+    minPolarAngle: Math.PI / 5,
     dampingFactor: 0.2,
     minDistance: 1,
-    maxDistance: 4
+    maxDistance: 3.2,
   }
 ) => {
   if (!camera || !renderer) return

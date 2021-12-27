@@ -55,8 +55,11 @@ export default (props: ModelParams = defaultOptions) => {
           o.material.map.anisotropy = 16
         }
         if (o.material && o.material.name.indexOf('poliuretano') > -1) {
-          o.material.envMapIntensity = 0.3
+          o.material.envMapIntensity = 0.2
           o.material.toneMapped = false
+        }
+        if (o.material && o.material.name.indexOf('wood') > -1) {
+          o.material.envMapIntensity = 0.5
         }
       })
 

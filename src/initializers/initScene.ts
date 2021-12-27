@@ -35,6 +35,8 @@ export default (props: SceneOptions = defaultOptions) => {
       exrLoader.load(options.hdri, (texture) => {
         texture.mapping = THREE.EquirectangularReflectionMapping
         scene.environment = texture
+        scene.environment.repeat.y = 20
+        console.log(scene)
         resolve(scene)
       })
     }

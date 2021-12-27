@@ -13,7 +13,8 @@ export default (
 
   const renderer: any = new THREE.WebGLRenderer({
     canvas,
-    antialias: true
+    antialias: true,
+    preserveDrawingBuffer: true
   })
 
   renderer.setPixelRatio(window.devicePixelRatio)

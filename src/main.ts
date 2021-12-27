@@ -8,9 +8,10 @@ import initLights from './initializers/initLights'
 import initGround from './initializers/initGround'
 import animate from './methods/animate'
 import onWindowResize from './utils/onWindowResize'
-import { ViewerParams, Callback, ModelParams } from './interfaces'
+import { ViewerParams, Callback, ModelParams, Axes, screenshotOptions } from './interfaces'
 import modelLoader from './methods/modelLoader'
 import merge from 'lodash/merge'
+import saveScreenshot from './utils/saveScreenshot'
 
 export default class {
   domElement: HTMLElement | null
@@ -58,10 +59,6 @@ export default class {
       onWindowResize(this.camera, this.renderer)
     }, false)
 
-    const followCameraLights = this.lights
-      .filter(l => l.followCamera)
-      .map(l => l.light)
-
     const targetModelLights = this.lights
       .filter(l => l.targetModel)
       .map(l => l.light)
@@ -72,9 +69,10 @@ export default class {
       })
 
     initGround(this.scene)
-    animate(this.controls, this.renderer, this.scene, this.camera, followCameraLights)
+    this.render()
 
     console.log('initialized')
+    console.log('Scene', this.scene)
     return {
       scene: this.scene,
       camera: this.camera,
@@ -82,6 +80,14 @@ export default class {
       lights: this.lights,
       model: this.model
     }
+  }
+
+  render () {
+    const followCameraLights = this.lights
+    .filter(l => l.followCamera)
+    .map(l => l.light)
+
+    animate(this.controls, this.renderer, this.scene, this.camera, followCameraLights)
   }
 
   replaceMesh (toRemove: string, toAdd: ModelParams | ModelParams[] | any, callback?: Callback) {
@@ -123,6 +129,12 @@ export default class {
         if (child.material && child.name.indexOf(material) > -1) {
           child.material.needsUpdate = true
           child.material.map = texture
+          child.material.map.flipY = false
+          child.material.map.anisotropy = 16
+          child.material.map.wrapS = 1000
+          child.material.map.wrapT = 1000
+          child.material.map.minFilter = 1006
+          child.material.map.encoding = 3001
         }
       })
     })
@@ -131,13 +143,45 @@ export default class {
   updateColor (material: string, color: [number, number, number] = [255, 255, 255], model: THREE.Object3D = this.model) {
     const [r, g, b] = color
     const newColor = new THREE.Color(Math.round(r / 255 * 100) / 100, Math.round(g / 255 * 100) / 100, Math.round(b / 255 * 100) / 100)
-    console.log(newColor)
     model.traverse(child => {
       if (child.material && child.name.indexOf(material) > -1) {
         child.material.needsUpdate = true
         child.material.color = newColor
         console.log(child.material)
       }
+    })
+  }
+
+  updateMaterial (material: string, options: any, model: THREE.Object3D = this.model) {
+    if (typeof options !== 'object') return
+    model.traverse(child => {
+      if (child.material && child.name.indexOf(material) > -1) {
+        child.material.needsUpdate = true
+        Object.keys(options).forEach((opt) => {
+          child.material[opt] = parseFloat(options[opt])
+        })
+      }
+    })
+  }
+
+  getScreenshot ( props: screenshotOptions ) {
+    const defaultOptions = {
+      position: { x: 0.5, y: 1, z: 2 },
+      format: 'image/jpeg'
+    }
+    const options = merge({}, props, defaultOptions)
+    const { position, format } = options
+
+    return new Promise((resolve) => {
+      const cameraPosition = this.camera.position.clone()
+      this.camera.position.set(position.x, position.y, position.z)
+      this.controls.update()
+      window.requestAnimationFrame(async () => {
+        const imgData = this.renderer.domElement.toDataURL(format)
+        this.camera.position.set(cameraPosition.x, cameraPosition.y, cameraPosition.z)
+        this.controls.update()
+        return resolve(imgData)
+      })
     })
   }
 }

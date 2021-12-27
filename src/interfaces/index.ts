@@ -70,3 +70,19 @@ export interface ModelParams {
   texture?: string
   shadows?: boolean
 }
+
+export interface ControlsOptions {
+  maxPolarAngle?: number,
+  minPolarAngle?: number,
+  enableDamping?: boolean,
+  enablePan?: boolean,
+  dampingFactor?: number,
+  minDistance?: number,
+  maxDistance?: number,
+  [propName: string]: any
+}
+
+export interface screenshotOptions {
+  position: Axes,
+  format: string
+}
