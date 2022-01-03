@@ -1,5 +1,5 @@
 {
-  "name": "@gianluca-plz/configurator-3d",
+  "name": "@PalazzinaCreativa/configurator-3d",
   "version": "0.0.7",
   "files": [
     "dist"
@@ -16,7 +16,7 @@
     "registry": "https://npm.pkg.github.com"
   },
   "repository": {
-    "url": "git@github.com:gianluca-plz/configurator-3d.git"
+    "url": "git@github.com:PalazzinaCreativa/configurator-3d.git"
   },
   "scripts": {
     "dev": "vite",
