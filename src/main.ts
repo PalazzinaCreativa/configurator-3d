@@ -8,11 +8,9 @@ import initLights from './initializers/initLights'
 import initGround from './initializers/initGround'
 import animate from './methods/animate'
 import onWindowResize from './utils/onWindowResize'
-import { ViewerParams, Callback, ModelParams, Axes, screenshotOptions } from './interfaces'
+import { ViewerParams, Callback, ModelParams, screenshotOptions } from './interfaces'
 import modelLoader from './methods/modelLoader'
 import merge from 'lodash/merge'
-import saveScreenshot from './utils/saveScreenshot'
-
 export default class {
   domElement: HTMLElement | null
   onReady?: Callback

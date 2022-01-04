@@ -20,7 +20,7 @@ const defaultOptions: ModelParams = {
   shadows: true
 }
 
-export default (props: ModelParams = defaultOptions) => {
+export default (props: ModelParams|string = defaultOptions) => {
   const path = typeof props === 'string'
     ? props
     : props.path
