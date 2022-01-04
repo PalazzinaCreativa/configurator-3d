@@ -48,7 +48,8 @@ export interface ViewerParams {
   onReady?: Callback
   scene?: SceneOptions
   camera?: CameraOptions
-  lights?: LightOptions[]
+  lights?: LightOptions[],
+  alpha?: boolean
 }
 
 export interface CameraOptions {
@@ -85,4 +86,8 @@ export interface ControlsOptions {
 export interface screenshotOptions {
   position: Axes,
   format: string
+}
+
+export interface RendererOptions {
+  [Props: string]: any
 }

@@ -1,7 +1,9 @@
 import * as THREE from 'three'
+import { RendererOptions } from '../interfaces'
 
 export default (
-  container: HTMLElement
+  container: HTMLElement,
+  options: RendererOptions
 ) => {
   if (!container) return null
   let canvas: HTMLElement | null = container.querySelector('canvas')
@@ -14,7 +16,8 @@ export default (
   const renderer: any = new THREE.WebGLRenderer({
     canvas,
     antialias: true,
-    preserveDrawingBuffer: true
+    preserveDrawingBuffer: true,
+    ...options
   })
 
   renderer.setPixelRatio(window.devicePixelRatio)
