@@ -21,7 +21,11 @@ const defaultOptions: ModelParams = {
 }
 
 export default (props: ModelParams = defaultOptions) => {
-  if (!props.path) {
+  const path = typeof props === 'string'
+    ? props
+    : props.path
+
+  if (!path) {
     console.error('Viewer 3D: You need to specify the model path')
     return null
   }

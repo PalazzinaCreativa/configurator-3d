@@ -38,7 +38,7 @@ export interface LightOptions {
 
 export interface ViewerParams {
   el: HTMLElement | string
-  model?: ModelParams
+  model?: ModelParams|string
   models?: {
       objects?: ModelParams[]
       positioning?: 'above' | 'below' | 'left' | 'right'
