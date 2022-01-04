@@ -49,7 +49,7 @@ export interface ViewerParams {
   scene?: SceneOptions
   camera?: CameraOptions
   lights?: LightOptions[],
-  alpha?: boolean
+  renderer?: RendererOptions
 }
 
 export interface CameraOptions {
