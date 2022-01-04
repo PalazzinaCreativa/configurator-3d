@@ -4,6 +4,6 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 const loader = new GLTFLoader()
 const dracoLoader = new DRACOLoader()
 loader.setDRACOLoader( dracoLoader )
-dracoLoader.setDecoderPath(__dirname + "/libs/draco/")
+dracoLoader.setDecoderPath("https://raw.githubusercontent.com/PalazzinaCreativa/configurator-3d/main/public/libs/draco/")
 
 export default loader
