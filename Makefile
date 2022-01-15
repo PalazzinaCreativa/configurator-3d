@@ -1,4 +1,5 @@
 publish:
+	git add .; \
 	npm version patch; \
 	yarn build; \
 	yarn build:types; \
