@@ -10,10 +10,10 @@ const defaultOptions: CameraOptions = {
   y: 1,
   z: 2
 }
-export default (props: CameraOptions = defaultOptions) => {
+export default (props: CameraOptions = defaultOptions, canvas: HTMLCanvasElement) => {
   const options = merge({}, defaultOptions, props)
   const { fov, near, far, x, y, z } = options
-  const camera: any = new THREE.PerspectiveCamera( fov, window.innerWidth / window.innerHeight, near, far)
+  const camera: any = new THREE.PerspectiveCamera( fov, canvas.offsetWidth / canvas.offsetHeight, near, far)
   camera.position.set(x, y, z)
 
   return camera

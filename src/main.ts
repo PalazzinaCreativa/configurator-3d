@@ -39,7 +39,7 @@ export default class {
 
     this.scene = await initScene(params.scene)
     this.renderer = initRenderer(this.domElement, params.renderer || {})
-    this.camera = initCamera(params.camera)
+    this.camera = initCamera(params.camera, this.renderer.domElement)
 
     if (params.model) {
       this.model = await modelLoader(params.model)

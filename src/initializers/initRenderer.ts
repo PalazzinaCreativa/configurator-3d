@@ -26,7 +26,7 @@ export default (
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
 	renderer.toneMappingExposure = 1;
   // renderer.outputEncoding = THREE.sRGBEncoding
-  renderer.setSize(window.innerWidth, window.innerHeight)
+  renderer.setSize(canvas.offsetWidth, canvas.offsetHeight)
   renderer.gammaFactor = 5
   container.appendChild(renderer.domElement)
 
