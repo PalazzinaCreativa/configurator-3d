@@ -5,6 +5,7 @@
     "dist"
   ],
   "main": "./dist/configurator.umd.js",
+  "types": "./dist/configurator.d.ts",
   "module": "./dist/configurator.es.js",
   "exports": {
     ".": {
