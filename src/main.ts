@@ -71,6 +71,9 @@ export default class {
 
     console.log('initialized')
     console.log('Scene', this.scene)
+
+    if (this.onReady) this.onReady()
+
     return {
       scene: this.scene,
       camera: this.camera,
