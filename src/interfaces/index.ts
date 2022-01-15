@@ -15,7 +15,7 @@ export interface FogOptions {
 }
 
 export interface SceneOptions {
-  background?: number | THREE.Color
+  background?: number | THREE.Color | null
   fog?: FogOptions | boolean,
   helper?: boolean,
   hdri?: boolean | string

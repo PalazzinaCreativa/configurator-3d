@@ -144,12 +144,25 @@ document
           el.classList.add('active')
         }
 
-        viewer.updateTexture('wood_mat', '/textures/faggio-wegne.png')
+        viewer.updateTexture('wood_mat', '/textures/faggio-wegne.jpg')
       })
   })
 
 document
   .querySelector('.get-screenshot')
-  .addEventListener('click', () => {
-    viewer.getScreenshot()
+  .addEventListener('click', async () => {
+    const base64 = await viewer.getScreenshot()
+    console.log(base64)
+    const a  = document.createElement('a')
+    a.href = base64.replace('data:image/jpeg;base64,', 'data:application/octet-stream;base64,')
+    a.setAttribute('download', 'screenshot.jpg')
+    document.body.append(a)
+    a.click()
+    document.body.removeChild(a)
+    // const w = window.open('about:blank')
+    // const image = new Image()
+    // image.src = base64
+    // setTimeout(function(){
+    //   w.document.write(image.outerHTML)
+    // }, 0)
   })

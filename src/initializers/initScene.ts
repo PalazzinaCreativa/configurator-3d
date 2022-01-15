@@ -17,7 +17,9 @@ const defaultOptions: SceneOptions = {
 export default (props: SceneOptions = defaultOptions) => {
   const options = merge({}, defaultOptions, props)
   const scene: THREE.Scene = new THREE.Scene()
-  scene.background = new THREE.Color(options.background)
+  scene.background = options.background === null
+    ? null
+    : new THREE.Color(options.background)
   if (options.fog) scene.fog = new THREE.Fog(options.fog.color || options.background, options.fog.near, options.fog.far)
 
   if (props.helper) scene.add(new THREE.AxesHelper( 5 ))
