@@ -36,6 +36,7 @@ export default class {
       console.error('3D Viewer: You need to specify a DOM Element.')
       return null
     }
+
     this.scene = await initScene(params.scene)
     this.renderer = initRenderer(this.domElement, params.renderer || {})
     this.camera = initCamera(params.camera)
@@ -72,7 +73,7 @@ export default class {
     console.log('initialized')
     console.log('Scene', this.scene)
 
-    if (this.onReady) this.onReady()
+    if (params.onReady) params.onReady()
 
     return {
       scene: this.scene,
