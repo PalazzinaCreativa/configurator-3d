@@ -114,6 +114,11 @@ export default class {
     this.scene.remove.apply(this.scene, this.scene.children)
   }
 
+  async addMesh (params: ModelParams) {
+    const newMesh = await modelLoader(params)
+    this.model.add(newMesh)
+  }
+
   updateMesh (name: string, options: { [key: string]: any }) {
     const model = this.getMesh(name)
     merge(model, options)
