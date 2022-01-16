@@ -42,7 +42,9 @@ export default class {
     this.camera = initCamera(params.camera, this.renderer.domElement)
 
     if (params.model) {
-      this.model = await modelLoader(params.model)
+      this.model = new THREE.Group()
+      const model = await modelLoader(params.model)
+      this.model.add(model)
     } else {
       this.model = await initModel(params.models)
     }
@@ -115,8 +117,9 @@ export default class {
   }
 
   async addMesh (params: ModelParams) {
-    const newMesh = await modelLoader(params)
+    const newMesh = await initModel(params)
     this.model.add(newMesh)
+    return newMesh
   }
 
   updateMesh (name: string, options: { [key: string]: any }) {
