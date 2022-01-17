@@ -41,7 +41,6 @@ const viewer = new Viewer({
   ]
 })
 
-console.log(viewer)
 
 const data = {
   annette: {
@@ -152,7 +151,6 @@ document
   .querySelector('.get-screenshot')
   .addEventListener('click', async () => {
     const base64 = await viewer.getScreenshot()
-    console.log(base64)
     const a  = document.createElement('a')
     a.href = base64.replace('data:image/jpeg;base64,', 'data:application/octet-stream;base64,')
     a.setAttribute('download', 'screenshot.jpg')

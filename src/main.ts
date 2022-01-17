@@ -43,6 +43,7 @@ export default class {
 
     if (params.model) {
       this.model = new THREE.Group()
+      this.model.rotation.y = Math.PI
       const model = await modelLoader(params.model)
       this.model.add(model)
     } else {
@@ -72,8 +73,6 @@ export default class {
     initGround(this.scene)
     this.render()
 
-    console.log('initialized')
-    console.log('Scene', this.scene)
 
     if (params.onReady) params.onReady()
 
@@ -117,13 +116,17 @@ export default class {
   }
 
   async addMesh (params: ModelParams) {
-    const newMesh = await initModel(params)
+    const newMesh = await modelLoader(params)
     this.model.add(newMesh)
     return newMesh
   }
 
   updateMesh (name: string, options: { [key: string]: any }) {
     const model = this.getMesh(name)
+    if (!model) {
+      console.warn('Update Mesh: No model found with name ' + name)
+      return
+    }
     merge(model, options)
   }
 
@@ -157,7 +160,6 @@ export default class {
       if (child.material && child.name.indexOf(material) > -1) {
         child.material.needsUpdate = true
         child.material.color = newColor
-        console.log(child.material)
       }
     })
   }
