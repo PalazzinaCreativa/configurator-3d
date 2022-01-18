@@ -17,7 +17,6 @@ const defaultOptions: LightOptions[] = [
     type: 'SpotLight',
     color: 0xffffff,
     intensity: 0.2,
-    // angle: Math.PI / 2,
     defaultShadows: true,
     position: {
       x: 0,
@@ -25,23 +24,10 @@ const defaultOptions: LightOptions[] = [
       z: 0
     },
     targetModel: true
-  },
-  // {
-  //   type: 'SpotLight',
-  //   color: 0xffffff,
-  //   intensity: 0.1,
-  //   penumbra: 0.2,
-  //   followCamera: true,
-  //   targetModel: true,
-  //   angle: Math.PI / 6,
-  //   position: {
-  //     x: 0,
-  //     y: 0,
-  //     z: 0
-  //   }
-  // }
+  }
 ]
 
+// Add three properties (exclude custom ones)
 const addProperties = (target: any, params: object) => {
   const excludeFromLoop = ['type', 'followCamera', 'targetModel', 'skyColor', 'groundColor', 'defaultShadows', 'position', 'color', 'intensity', 'helper']
   Object
@@ -55,20 +41,23 @@ const addProperties = (target: any, params: object) => {
       target[p] = params[p]
     })
 }
+
+// Return a new light
 const createLight = (params: LightOptions) => {
+  // Initilize light and store it in a variable (light)
   let light
   if (params.type === 'HemisphereLight') {
     light = new THREE.HemisphereLight(params.skyColor || 0xffffff, params.groundColor || 0xffffff, params.intensity || 1)
   } else {
     light = new THREE[params.type](params.color || 0xffffff, params.intensity || 1)
   }
+
+  // Add received parameters
   if (params.position) light.position.set(params.position?.x || 0, params.position?.y || 0, params.position?.z || 0)
   if (params.defaultShadows) {
     light.castShadow = true
     light.shadow.bias = 0.001
     light.penumbra = 0.4
-    // light.shadow.camera.near = 8
-    // light.shadow.camera.far = 200
     light.shadow.mapSize = new THREE.Vector2(256, 256)
     light.shadow.radius = 6
   }
@@ -105,6 +94,16 @@ export default (
         if (typeof params.helper === 'number') helper.color = params.helper
         scene.add(helper)
       }
+    })
+
+  // Set lights target
+  const targetModelLights = lights
+    .filter(l => l.targetModel)
+    .map(l => l.light)
+
+  targetModelLights
+    .forEach((l: THREE.HemisphereLight | THREE.SpotLight) => {
+      l.target = scene.children.find(c => c.name = 'mainModel')
     })
 
   return lights

@@ -20,13 +20,13 @@ export default (
     ...options
   })
 
-  renderer.setPixelRatio(window.devicePixelRatio)
+  renderer.setPixelRatio(container.offsetWidth / container.offsetHeight)
   renderer.shadowMap.enabled = true
   renderer.shadowMap.type = THREE.PCFSoftShadowMap
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
 	renderer.toneMappingExposure = 1;
   // renderer.outputEncoding = THREE.sRGBEncoding
-  renderer.setSize(canvas.offsetWidth, canvas.offsetHeight)
+  renderer.setSize(container.offsetWidth, container.offsetHeight)
   renderer.gammaFactor = 5
   container.appendChild(renderer.domElement)
 

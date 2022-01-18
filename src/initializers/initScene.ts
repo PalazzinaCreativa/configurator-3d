@@ -26,13 +26,6 @@ export default (props: SceneOptions = defaultOptions) => {
 
   return new Promise((resolve) => {
     if (options.hdri) {
-      // new RGBELoader().load(options.hdri, (texture) => {
-      //   console.log(texture)
-      //   texture.mapping = THREE.EquirectangularReflectionMapping
-      //   scene.environment = texture
-      //   console.log(scene)
-      //   resolve(scene)
-      // })
       const exrLoader: any = new EXRLoader()
       exrLoader.load(options.hdri, (texture) => {
         texture.mapping = THREE.EquirectangularReflectionMapping

@@ -1,5 +1,7 @@
 import * as THREE from 'three'
 
+// TODO: Organize interfaces in groups
+
 export type Callback = () => void
 
 export interface Axes {
@@ -84,10 +86,26 @@ export interface ControlsOptions {
 }
 
 export interface screenshotOptions {
-  position: Axes,
-  format: string
+  position?: Axes,
+  format?: string,
+  background?: number
 }
 
 export interface RendererOptions {
   [Props: string]: any
+}
+
+export interface UpdateTextureParams {
+  material: string,
+  texturePath: string,
+  repeat?: number,
+  model?: THREE.Object3D,
+  exclude: string[],
+  name?: string
+}
+
+export interface UpdateColorParams {
+  material: string,
+  color: [number, number, number],
+  model: THREE.Object3D
 }

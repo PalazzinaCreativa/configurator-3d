@@ -43,6 +43,7 @@ export default (props?: Props | ModelParams[]): any => {
 
     models
       .forEach((m: THREE.Object3D, i: number) => {
+        // Position models relatively
         if ("positioning" in props && i !== 0) {
           const positioning = props?.positioning
           const prevModelHeight: number = getObject3dHeight(models[i - 1])

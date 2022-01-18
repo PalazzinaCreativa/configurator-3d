@@ -14,8 +14,8 @@ export default (
     const canvas: HTMLCanvasElement = renderer.domElement
     const width: number = window.innerWidth
     const height: number = window.innerHeight
-    const canvasPixelWidth: number = canvas.width / window.devicePixelRatio
-    const canvasPixelHeight: number = canvas.height / window.devicePixelRatio
+    const canvasPixelWidth: number = canvas.offsetWidth / window.devicePixelRatio
+    const canvasPixelHeight: number = canvas.offsetHeight / window.devicePixelRatio
 
     const needResize: boolean = canvasPixelWidth !== width || canvasPixelHeight !== height
 
