@@ -12,8 +12,8 @@ export default (
     renderer: THREE.WebGLRenderer
   ): boolean => {
     const canvas: HTMLCanvasElement = renderer.domElement
-    const width: number = window.innerWidth
-    const height: number = window.innerHeight
+    const width: number = canvas.offsetWidth
+    const height: number = canvas.offsetHeight
     const canvasPixelWidth: number = canvas.offsetWidth / window.devicePixelRatio
     const canvasPixelHeight: number = canvas.offsetHeight / window.devicePixelRatio
 

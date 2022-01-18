@@ -2,6 +2,9 @@
 // TODO: Readme + Documentation
 // TODO: Organize main.ts
 // TODO: Intellisense
+// TODO: unique ids
+// TODO: Tests
+// TODO: Confgure JSDocs
 
 import * as THREE from 'three'
 import initScene from './initializers/initScene'
@@ -18,15 +21,31 @@ import modelLoader from './methods/modelLoader'
 import merge from 'lodash/merge'
 import { consoleInfo, consoleWarn, consoleError } from './utils/consoleLog'
 import getColorFromRGB from './utils/getColorFromRGB'
+
+/**
+ * Show and controls a 3D Viewer rendered on HTML Canvas.
+ * @constructor
+ * @param params - Informations of the viewer.
+ * @param {string || HTMLElement} params.el - HTML Element used as wrapper for the 3D Viewer.
+ * @param {} params.scene - Scene options.
+ * @param {} params.model - Single model options.
+ * @param {} params.models - Multiple model options.
+ * @param {} params.camera - Camera options.
+ * @param {} params.lights - Lights options.
+ * @param {} params.renderer - Renderer options.
+ * @param {() => void} params.onReady - Callback.
+ */
 export default class {
   domElement: HTMLElement | null
   onReady?: Callback
   scene: THREE.Scene
   renderer: THREE.WebGLRenderer
   camera: THREE.PerspectiveCamera
+  // TODO: Controls type
   controls: any
   model: THREE.Object3D
   base: THREE.Object3D
+  // TODO: Lights type
   lights: any
 
   constructor (
@@ -46,9 +65,10 @@ export default class {
 
     // Initialize scene, renderer and camera with props
     this.scene = await initScene(params.scene)
-    this.renderer = initRenderer(this.domElement, params.renderer || {})
+    this.renderer = await initRenderer(this.domElement, params.renderer || {})
     this.camera = initCamera(params.camera, this.renderer.domElement)
 
+    // TODO: Refactor model / models (acceot both or unify terms)
     // Initialize model
     if (params.model) {
       // If single model
@@ -56,7 +76,7 @@ export default class {
       this.model.rotation.y = Math.PI
       const model = await modelLoader(params.model)
       this.model.add(model)
-    } else {
+    } else if (params.models) {
       // if multiple models
       this.model = await initModel(params.models)
     }
@@ -97,13 +117,19 @@ export default class {
 
   render () {
     const followCameraLights = this.lights
-      .filter(l => l.followCamera)
-      .map(l => l.light)
-
+    .filter(l => l.followCamera)
+    .map(l => l.light)
+    
     animate(this.controls, this.renderer, this.scene, this.camera, followCameraLights)
   }
-
-  // Remove "toRemove" mesh and add "toAdd" mesh
+  
+  /**
+  * Remove "toRemove" mesh and add "toAdd" mesh.
+  * @param {string} toRemove - Name of the mesh to remove.
+  * @param {} toAdd - Options of the model to add.
+  * @param {callback} callback - Callback.
+  * @return {} The updated model.
+  */
   replaceMesh (toRemove: string, toAdd: ModelParams | ModelParams[] | any, callback?: Callback) {
     return new Promise(async (resolve) => {
       const removeMesh = this.getMesh(toRemove)
@@ -122,7 +148,12 @@ export default class {
     })
   }
 
-  // Add new mesh
+  /**
+  * Add a new mesh.
+  * @param {} params - Options of the new mesh.
+  * @param {callback} callback - Callback.
+  * @return {} The new mesh.
+  */
   async addMesh (params: ModelParams, callback?: Callback) {
     const newMesh = await modelLoader(params)
     this.model.add(newMesh)
@@ -130,7 +161,12 @@ export default class {
     return newMesh
   }
 
-  // Update existing mesh
+  /**
+   * Update an existing mesh.
+   * @param {string} name - Name of the mesh that have to be updated.
+   * @param {[key: string]: any} options - Update's options.
+   * @param {callback} callback - Callback.
+   */
   async updateMesh (name: string, options: { [key: string]: any }, callback?: Callback) {
     const model = this.getMesh(name)
     if (!model) {
@@ -141,7 +177,11 @@ export default class {
     if (callback) callback()
   }
 
-  // Return an existing mesh
+  /**
+   * Get a mesh.
+   * @param {string} name - Name of the mesh.
+   * @return {} The mesh.
+   */
   getMesh (name: string) {
     const mesh = this.model?.children?.find((m: THREE.Object3D) => m.name === name)
     if (!mesh) {
@@ -151,7 +191,13 @@ export default class {
     return this.model?.children?.find((m: THREE.Object3D) => m.name === name)
   }
 
-  // Update textures for a model (mainModel is the default)
+  /**
+   * Update texture on selected material.
+   * @param {} params - Options.
+   * @param {string} params.material - Name of the material to be updated.
+   * @param {string} params.texturePath - Path of the texture.
+   * @param {callback} callback - Callback.
+   */
   updateTexture (params: UpdateTextureParams, callback: Callback) {
     const defaultOptions = {
       repeat: 4,
@@ -192,7 +238,13 @@ export default class {
     })
   }
 
-  // Update color for a given material
+  /**
+   * Update color on selected material.
+   * @param {} params - Options.
+   * @param {string} params.material - Name of the material to be updated.
+   * @param {[number, number, number]} params.rgb - New color in RGB Format.
+   * @param {callback} callback - Callback.
+   */
   async updateColor (params: UpdateColorParams, callback?: Callback) {
     const defaultOptions = {
       color: [255, 255, 255],
@@ -207,7 +259,7 @@ export default class {
 
     let count = 0
     model.traverse(child => {
-      if (!child.material || child.name.indexOf(material) === -1)
+      if (!child.material || child.name.indexOf(material) === -1) return
       child.material.needsUpdate = true
       child.material.color = newColor
       count++
@@ -221,7 +273,12 @@ export default class {
     if (callback) callback()
   }
 
-  // Update a material with given options
+  /**
+   * Update material
+   * @param {string} name – Name of the material to be updated.
+   * @param {} options - Options.
+   * @param {callback} callback - Callback.
+   */
   async updateMaterial (material: string, options: { [Props: string]: any }, callback?: Callback) {
     const model = options.model || this.model
     if (typeof options !== 'object') return
@@ -235,8 +292,6 @@ export default class {
 
     if (callback) callback()
   }
-
-  // FIXME: Screenshot ratio
 
   // Return a base64 image of current canvas on a given position
   getScreenshot ( props: screenshotOptions ) {

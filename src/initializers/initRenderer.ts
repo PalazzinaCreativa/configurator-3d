@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { RendererOptions } from '../interfaces'
 
-export default (
+export default async (
   container: HTMLElement,
   options: RendererOptions
 ) => {

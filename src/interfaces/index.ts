@@ -1,9 +1,7 @@
+// TODO: Organize interfaces in groups
 import * as THREE from 'three'
 
-// TODO: Organize interfaces in groups
-
 export type Callback = () => void
-
 export interface Axes {
   x?: number
   y?: number
