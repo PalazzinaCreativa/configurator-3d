@@ -250,9 +250,9 @@ export default class {
       color: [255, 255, 255],
       model: this.model
     }
-
+    
     const options = merge({}, defaultOptions, params)
-
+    
     const { material, color, model } = options
     const [r, g, b] = color
     const newColor = getColorFromRGB(r, g, b)
