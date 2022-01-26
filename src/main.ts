@@ -91,9 +91,9 @@ export default class {
 
     // Actions based on window/element size
     onWindowResize(this.camera, this.renderer)
-    window.addEventListener('resize', () => {
-      onWindowResize(this.camera, this.renderer)
-    }, false)
+    // window.addEventListener('resize', () => {
+    //   onWindowResize(this.camera, this.renderer)
+    // }, false)
 
     // Init ground
     initGround(this.scene)
@@ -119,10 +119,10 @@ export default class {
     const followCameraLights = this.lights
     .filter(l => l.followCamera)
     .map(l => l.light)
-    
+
     animate(this.controls, this.renderer, this.scene, this.camera, followCameraLights)
   }
-  
+
   /**
   * Remove "toRemove" mesh and add "toAdd" mesh.
   * @param {string} toRemove - Name of the mesh to remove.

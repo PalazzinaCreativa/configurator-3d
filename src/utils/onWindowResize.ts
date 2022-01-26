@@ -1,10 +1,9 @@
 import * as THREE from 'three'
 
 export default (camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer) => {
-  camera.aspect = renderer.domElement.offsetWidth / renderer.domElement.offsetHeight
+  camera.aspect = renderer.domElement.parentNode.offsetWidth / renderer.domElement.parentNode.offsetHeight
   camera.updateProjectionMatrix()
-  console.log(renderer.domElement.offsetWidth)
-  renderer.domElement.setAttribute('width', renderer.domElement.offsetWidth)
-  renderer.domElement.setAttribute('height', renderer.domElement.offsetHeight)
-  renderer.setSize( renderer.domElement.offsetWidth, renderer.domElement.offsetHeight )
+  renderer.domElement.setAttribute('width', renderer.domElement.parentNode.offsetWidth)
+  renderer.domElement.setAttribute('height', renderer.domElement.parentNode.offsetHeight)
+  renderer.setSize( renderer.domElement.parentNode.offsetWidth, renderer.domElement.parentNode.offsetHeight )
 }
