@@ -103,7 +103,8 @@ export interface UpdateTextureParams {
 }
 
 export interface UpdateColorParams {
-  material: string,
+  material?: string,
+  mesh?: string,
   color: [number, number, number],
-  model: THREE.Object3D
+  model?: THREE.Object3D
 }
