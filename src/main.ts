@@ -91,9 +91,9 @@ export default class {
 
     // Actions based on window/element size
     onWindowResize(this.camera, this.renderer)
-    // window.addEventListener('resize', () => {
-    //   onWindowResize(this.camera, this.renderer)
-    // }, false)
+    window.addEventListener('resize', () => {
+      onWindowResize(this.camera, this.renderer)
+    }, false)
 
     // Init ground
     initGround(this.scene)
