@@ -7,11 +7,12 @@ export default (
   camera: THREE.Camera,
   renderer: THREE.WebGLRenderer,
   model: THREE.Object3D,
+  // TODO: Controls Options Props
   options: ControlsOptions = {
     enableDamping: true,
     enablePan: false,
-    maxPolarAngle: Math.PI / 2,
-    minPolarAngle: Math.PI / 5,
+    maxPolarAngle: Math.PI / 2.2,
+    minPolarAngle: Math.PI / 4,
     dampingFactor: 0.2,
     minDistance: 1,
     maxDistance: 3.2,
