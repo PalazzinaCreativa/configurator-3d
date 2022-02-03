@@ -213,7 +213,7 @@ export default class {
         texture.name = name || texturePath
         texture.repeat.set(repeat, repeat)
         model.traverse(child => {
-          if (!child.material || child.name.indexOf(material) === -1) return
+          if (!child.material || child.material.name.indexOf(material) === -1) return
           if (exclude && exclude.indexOf(child.name) > -1) return
           // FIXME: Default options
           child.material.needsUpdate = true
@@ -250,16 +250,16 @@ export default class {
       color: [255, 255, 255],
       model: this.model
     }
-    
+
     const options = merge({}, defaultOptions, params)
-    
+
     const { material, color, model } = options
     const [r, g, b] = color
     const newColor = getColorFromRGB(r, g, b)
 
     let count = 0
     model.traverse(child => {
-      if (!child.material || child.name.indexOf(material) === -1) return
+      if (!child.material || child.material.name.indexOf(material) === -1) return
       child.material.needsUpdate = true
       child.material.color = newColor
       count++
@@ -283,7 +283,7 @@ export default class {
     const model = options.model || this.model
     if (typeof options !== 'object') return
     model.traverse(child => {
-      if (!child.material || child.name.indexOf(material) === -1) return
+      if (!child.material || child.material.name.indexOf(material) === -1) return
       child.material.needsUpdate = true
       Object.keys(options).forEach((opt) => {
         child.material[opt] = parseFloat(options[opt])
