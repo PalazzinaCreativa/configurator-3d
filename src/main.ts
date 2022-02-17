@@ -134,7 +134,7 @@ export default class {
     return new Promise(async (resolve) => {
       const removeMesh = this.getMesh(toRemove)
       if (!removeMesh) {
-        consoleError("Viewer 3D: Can't replace mesh. No model found with name " + toRemove)
+        consoleWarn("Viewer 3D: Can't replace mesh. No model found with name " + toRemove)
         return null
       }
 
@@ -170,7 +170,7 @@ export default class {
   async updateMesh (name: string, options: { [key: string]: any }, callback?: Callback) {
     const model = this.getMesh(name)
     if (!model) {
-      consoleError("Viewer 3D: Can't update mesh. No model found with name " + name)
+      consoleWarn("Viewer 3D: Can't update mesh. No model found with name " + name)
       return
     }
     merge(model, options)
@@ -185,7 +185,6 @@ export default class {
   getMesh (name: string) {
     const mesh = this.model?.children?.find((m: THREE.Object3D) => m.name === name)
     if (!mesh) {
-      consoleError('Viewer 3D: No mesh found with name ' + name)
       return null
     }
     return this.model?.children?.find((m: THREE.Object3D) => m.name === name)
