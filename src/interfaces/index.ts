@@ -45,6 +45,7 @@ export interface ViewerParams {
       space?: number
     }
     | ModelParams[]
+  meshes?: Mesh[]
   onReady?: Callback
   scene?: SceneOptions
   camera?: CameraOptions
@@ -52,6 +53,24 @@ export interface ViewerParams {
   renderer?: RendererOptions
 }
 
+export interface Mesh {
+  type: 'BoxGeomtry' | 'CircleGeometry' | 'ConeGeometry' | 'CylinderGeometry' | 'DodecahedronGeometry' | 'PlaneGeometry' | 'RingGeometry' | 'SphereGeometry' | 'TetrahedronGeometry' | 'TorusGeometry' | 'TorusKnotGeometry' | 'WireframeGeometry'
+  args: number[],
+  material: Material,
+  name?: string,
+  position?: Axes,
+  rotation?: Axes,
+  options?: {
+    [Props: string]: any
+  }
+}
+
+export interface Material {
+  type:  'LineBasicMaterial' | 'LineDashedMaterial' | 'Material' | 'MeshBasicMaterial' | 'MeshDepthMaterial' | 'MeshDistanceMaterial' | 'MeshLambertMaterial' | 'MeshMatcapMaterial' | 'MeshNormalMaterial' | 'MeshPhongMaterial' | 'MeshPhysicalMaterial' | 'MeshStandardMaterial' | 'MeshToonMaterial' | 'PointsMaterial' | 'RawShaderMaterial' | 'ShaderMaterial' | 'ShadowMaterial' | 'SpriteMaterial',
+  options: {
+    [Props: string]: any
+  }
+}
 export interface CameraOptions {
   fov?: number
   near?: number

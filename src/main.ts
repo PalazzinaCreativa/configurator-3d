@@ -15,6 +15,7 @@ import initControls from './initializers/initControls'
 import initLights from './initializers/initLights'
 import initGround from './initializers/initGround'
 import animate from './methods/animate'
+import createMesh from './utils/createMesh'
 import onWindowResize from './utils/onWindowResize'
 import { ViewerParams, Callback, ModelParams, screenshotOptions, UpdateTextureParams, UpdateColorParams } from './interfaces'
 import modelLoader from './methods/modelLoader'
@@ -41,6 +42,8 @@ export default class {
   scene: THREE.Scene
   renderer: THREE.WebGLRenderer
   camera: THREE.PerspectiveCamera
+  // TODO: Meshes type
+  meshes: any
   // TODO: Controls type
   controls: any
   model: THREE.Object3D
@@ -80,6 +83,15 @@ export default class {
       // if multiple models
       this.model = await initModel(params.models)
     }
+
+    if (params.meshes) {
+      this.meshes = params.meshes.map(g => {
+        const mesh = createMesh(g)
+        this.scene.add(mesh)
+        return mesh
+      })
+    }
+
     this.model.name = 'MainModel'
     this.scene.add(this.model)
 
