@@ -92,7 +92,7 @@ export default class {
       })
     }
 
-    this.model.name = 'MainModel'
+    if (this.model) this.model.name = 'MainModel'
     this.scene.add(this.model)
 
     // Init Orbit Controls
