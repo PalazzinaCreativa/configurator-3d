@@ -317,7 +317,7 @@ export default class {
       let backupBg
       if (options.background) {
         backupBg = this.scene.background
-        ? this.scene.background.clone()
+        ? this.scene.background?.clone()
         : null
         this.scene.background = options.background
       }
