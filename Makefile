@@ -1,6 +1,7 @@
 publish:
-	yarn build; \
-	yarn build:types; \
+	npm i; \
+	npm run build; \
+	npm run build:types; \
 	git stash; \
 	npm version patch; \
 	git stash pop; \
