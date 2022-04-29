@@ -50,6 +50,7 @@ export default class {
   base: THREE.Object3D
   // TODO: Lights type
   lights: any
+  initialConfig: ViewerParams
 
   constructor (
     params: ViewerParams
@@ -57,6 +58,7 @@ export default class {
     this.domElement = typeof params.el === 'string'
       ? document.querySelector(params.el)
       : params.el
+    this.initialConfig = params
     this.init(params)
   }
 
@@ -314,20 +316,14 @@ export default class {
     const { position, format } = options
 
     return new Promise((resolve) => {
-      let backupBg
-      if (options.background) {
-        backupBg = this.scene.background
-        ? this.scene.background?.clone()
-        : null
-        this.scene.background = options.background
-      }
+      if (options.background) this.scene.background = options.background
       const cameraPositionBackup = this.camera.position.clone()
       this.camera.position.set(position.x, position.y, position.z)
       this.controls.update()
       window.requestAnimationFrame(async () => {
         const imgData = this.renderer.domElement.toDataURL(format)
         this.camera.position.set(cameraPositionBackup.x, cameraPositionBackup.y, cameraPositionBackup.z)
-        if (backupBg) this.scene.background = backupBg
+        if (this.initialConfig.scene?.background) this.scene.background = this.initialConfig.scene.background
         this.controls.update()
         return resolve(imgData)
       })
