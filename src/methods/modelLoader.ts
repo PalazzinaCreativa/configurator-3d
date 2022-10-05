@@ -59,11 +59,20 @@ export default (props: ModelParams|string = defaultOptions) => {
           o.material.map.anisotropy = 16
         }
         if (o.material && o.material.name.indexOf('poliuretano') > -1) {
-          o.material.envMapIntensity = 0.2
-          o.material.toneMapped = false
+          const t = new THREE.TextureLoader().load( 'https://rossetto.s3.eu-central-1.amazonaws.com/NORMAL+POLIURETANO.jpg' )
+          t.repeat.set(20, 20)
+          o.material.color.setHex( 0xC0A96D )
+          o.material.envMapIntensity = 0.4
+          o.material.toneMapped = true
+          o.material.normalMap = t
         }
         if (o.material && o.material.name.indexOf('wood') > -1) {
           o.material.envMapIntensity = 0.5
+        }
+        if (o.material && o.material.name.indexOf('legno') > -1) {
+          const t = new THREE.TextureLoader().load( 'https://rossetto.s3.eu-central-1.amazonaws.com/FAGGIO_2_NATURALE_c7bf625efb.jpg' )
+          o.material.envMapIntensity = 0.5
+          o.material.map = t
         }
       })
 

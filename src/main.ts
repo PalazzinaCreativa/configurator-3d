@@ -98,7 +98,7 @@ export default class {
     this.scene.add(this.model)
 
     // Init Orbit Controls
-    this.controls = initControls(this.camera, this.renderer, this.model)
+    this.controls = initControls(this.camera, this.renderer, this.model, params.controls)
 
     // Init lights
     this.lights = initLights(this.scene)

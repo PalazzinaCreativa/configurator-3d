@@ -50,7 +50,8 @@ export interface ViewerParams {
   scene?: SceneOptions
   camera?: CameraOptions
   lights?: LightOptions[],
-  renderer?: RendererOptions
+  renderer?: RendererOptions,
+  controls?: ControlsOptions
 }
 
 export interface Mesh {
