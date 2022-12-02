@@ -66,9 +66,20 @@ export default (props: ModelParams|string = defaultOptions) => {
           o.material.toneMapped = true
           o.material.normalMap = t
         }
+
+        if (o.material && o.material.name.indexOf('_cuscino_') > -1) {
+          const t = new THREE.TextureLoader().load( 'https://rossetto.s3.eu-central-1.amazonaws.com/NORMAL+POLIURETANO.jpg' )
+          t.repeat.set(20, 20)
+          o.material.color.setHex( 0x3A3B3C )
+          o.material.envMapIntensity = 0.4
+          o.material.toneMapped = true
+          o.material.normalMap = t
+        }
+
         if (o.material && o.material.name.indexOf('wood') > -1) {
           o.material.envMapIntensity = 0.5
         }
+
         if (o.material && o.material.name.indexOf('legno') > -1) {
           const t = new THREE.TextureLoader().load( 'https://rossetto.s3.eu-central-1.amazonaws.com/FAGGIO_2_NATURALE_c7bf625efb.jpg' )
           o.material.envMapIntensity = 0.5
