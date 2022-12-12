@@ -67,7 +67,7 @@ export default (props: ModelParams|string = defaultOptions) => {
           o.material.normalMap = t
         }
 
-        if (o.material && o.material.name.indexOf('_cuscino_') > -1) {
+        if (o.material && o.material.name.indexOf('_tech_') > -1) {
           const t = new THREE.TextureLoader().load( 'https://rossetto.s3.eu-central-1.amazonaws.com/NORMAL+POLIURETANO.jpg' )
           t.repeat.set(20, 20)
           o.material.color.setHex( 0x3A3B3C )
